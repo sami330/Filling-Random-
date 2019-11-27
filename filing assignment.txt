@@ -1,0 +1,90 @@
+task 1.1:
+
+structure data
+dim name as string
+dim membershipid as integer
+dim search as string
+end structure
+
+sub recordadder()
+dim M.name as data
+dim M.membershipid as data
+fileopen(1,"C:\users\Sami khatri\desktop\Programs & stuff\filing Assignment\M",openmode.random,openacesss.readwrite)
+console.writeline("enter name")
+M.name=console.readline
+console.writeline("enter membershipid")
+M.membershipid=console.readline
+dim recordno as integer
+recno=LOF(1)/LEN(M)
+recno=recno+1
+filePut(1,M,recno)
+fileclose(1)
+endsub
+
+
+
+task 1.2:
+
+Case LCase ("output")
+fileopen(1,"C:\users\Sami khatri\desktop\Programs & stuff\filing Assignment\M",openmode.random,openacesss.readwrite)
+recno=LOF(1)/LEN(M)
+for count=1 to recno
+fileGet(1,M,count)
+console.writeline("name : "& M.name)
+console.writeline("id : & M.membershipid)
+next count
+fileclose(1)
+console.writeline(press anykey to continue")
+console.readkey()
+
+Case "exit"
+case else
+console.writeline("invalid entry")
+console.readkey()
+console.writeline("enter 'exit' to exit")
+console.writeline(choice:")
+choice=console.readline
+select Case choice 
+Case LCase("add") : newrecord()
+
+
+task 1.3:
+
+dim searchname as string
+Case LCase("search")endif
+console.writeline("enter name to search")
+searchname=console.readline
+searchresult=recsearcher(searchname)
+if searchresult = -1 then 
+console.writeline("record not found. press any key to continue")
+console.readkey()
+GoTo line1
+else if searchresult < > -1 then
+console.writeline("id number : ")
+console.writeline("searchresult")
+console.readkey()
+GoTo line1
+endif
+
+function recsearcher(by val searchinput as string) as integer
+dim M as data
+dim search as data
+dim recno as integer
+dim recpos as integer
+search.name=searchinput
+search.nmae=namecorrection(searchname)
+recpos = 1
+fileopen(1,"C:\users\Sami khatri\desktop\Programs & stuff\filing Assignment\M",openmode.random,openacesss.readwrite)
+recno=LOF(1)/LEN(M)
+do  FileGet(1,M,recpos)
+if LCase(search.name) = LCase(M.name) then
+fileclose(1)
+return M.membershipid
+endif
+recpos = recpos + 1
+if recpos > recno then
+return -1
+endif
+loop until recpos > recno
+fileclose(1)
+end function
